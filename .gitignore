@@ -40,8 +40,8 @@ yarn-error.log*
 # vercel
 .vercel
 
-# Cloudflare Pages
-.vercel/output/
+# Cloudflare
+.open-next
 
 # typescript
 *.tsbuildinfo

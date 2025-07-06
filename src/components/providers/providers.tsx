@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type * as React from "react";
+import { Suspense } from "react";
 import { SidebarProvider } from "../ui/sidebar";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -12,7 +13,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
-        <NuqsAdapter>{children}</NuqsAdapter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </Suspense>
       </SidebarProvider>
       {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
