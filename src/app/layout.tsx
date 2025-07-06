@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { AppSidebar } from "@/components/app-sidebar";
 import Providers from "@/components/providers/providers";
 import type { Metadata } from "next";

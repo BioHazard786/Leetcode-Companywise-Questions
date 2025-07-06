@@ -146,11 +146,76 @@ bun build        # Build for production
 bun start        # Start production server
 bun lint         # Run ESLint
 
+# Cloudflare Pages Deployment
+bun pages:build  # Build for Cloudflare Pages
+bun preview      # Preview locally with Cloudflare Workers
+bun deploy       # Deploy to Cloudflare Pages
+
 # Database
 bun db:generate  # Generate database migrations
 bun db:migrate   # Run database migrations
 bun db:studio    # Open Drizzle Studio
 ```
+
+## 🚀 Deployment
+
+### Cloudflare Pages
+
+This project is optimized for deployment on Cloudflare Pages with the following steps:
+
+#### Setup Requirements
+
+1. **Cloudflare Account**: Sign up at [Cloudflare](https://dash.cloudflare.com/sign-up)
+2. **Wrangler CLI**: Already included as a dev dependency
+
+#### Automatic Deployment (Recommended)
+
+1. **Connect your repository to Cloudflare Pages**:
+   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
+   - Click "Create a project" → "Connect to Git"
+   - Select your repository
+
+2. **Configure build settings**:
+
+   ```text
+   Build command: npm run pages:build
+   Build output directory: .vercel/output/static
+   Root directory: (leave empty)
+   ```
+
+3. **Set environment variables**:
+   - Add your `DATABASE_URL` and other environment variables in the Pages dashboard
+
+4. **Deploy**: Cloudflare will automatically build and deploy your site
+
+#### Manual Deployment
+
+1. **Build the project**:
+
+   ```bash
+   bun pages:build
+   ```
+
+2. **Deploy using Wrangler**:
+
+   ```bash
+   bunx wrangler pages deploy .vercel/output/static --project-name=your-project-name
+   ```
+
+#### Environment Variables
+
+Make sure to set these environment variables in your Cloudflare Pages dashboard:
+
+- `DATABASE_URL`: Your Neon PostgreSQL connection string
+- `NEXT_PUBLIC_APP_URL`: Your Cloudflare Pages domain (e.g., `https://your-app.pages.dev`)
+
+### Other Deployment Options
+
+While optimized for Cloudflare Pages, this project can also be deployed to:
+
+- **Vercel**: `vercel deploy` (requires Vercel CLI)
+- **Netlify**: Connect repository and set build command to `npm run build`
+- **Docker**: Use the included Dockerfile (if you add one)
 
 ## 🌟 Key Features Explained
 

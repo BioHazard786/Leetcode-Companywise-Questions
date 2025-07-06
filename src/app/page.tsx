@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { loadSearchParams } from "@/app/search-params";
 import { DataTable } from "@/components/problems/data-table";
 import { getProblems } from "@/server/action";
