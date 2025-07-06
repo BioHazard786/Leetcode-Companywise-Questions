@@ -1,3 +1,5 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import Providers from "@/components/providers/providers";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -25,9 +27,31 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
-        {children}
+        <Providers>
+          <div className="flex h-screen w-full">
+            <AppSidebar />
+            <main className="flex-1 overflow-auto">
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div className="p-4">
+                    <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+                      LeetCode Problems
+                    </h1>
+                    <p className="text-sm md:text-base text-muted-foreground">
+                      Browse and filter problems by company, difficulty, and
+                      topics
+                    </p>
+                  </div>
+                </div>
+
+                {children}
+              </div>
+            </main>
+          </div>
+        </Providers>
       </body>
     </html>
   );

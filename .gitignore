@@ -31,7 +31,11 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -39,3 +43,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sync folder
+sync/.env
+sync/.env.local
+sync/.env.development.local
+sync/.env.test.local
+sync/.env.production.local
+sync/node_modules/
+sync/bun.lock
+sync/*.log
+sync/logs/
+sync/temp/
+sync/.DS_Store

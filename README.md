@@ -1,36 +1,203 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 LeetCode Company-wise Questions
 
-## Getting Started
+> A modern, responsive web application to explore and filter LeetCode problems categorized by companies, topics, and difficulty levels.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/Next.js-15.3.4-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0-blue?logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- 🔍 **Smart Search**: Find problems by title or description with real-time filtering
+- 🏢 **Company Filtering**: Filter problems by specific companies (Google, Microsoft, Amazon, etc.)
+- 📚 **Topic-based Filtering**: Browse problems by algorithms and data structures topics
+- 📊 **Difficulty Levels**: Easy, Medium, and Hard problem categorization
+- 📱 **Responsive Design**: Beautiful UI that works on desktop, tablet, and mobile
+- ⚡ **Performance Optimized**: Built with Next.js 15 and React 19 for blazing-fast performance
+- 🎨 **Modern UI**: Crafted with shadcn/ui components and Tailwind CSS
+- 📄 **Virtualized Tables**: Efficient rendering for large datasets with TanStack Table
+- 🔗 **URL State Management**: Shareable URLs with Nuqs for search parameters
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework**: Next.js 15 with App Router
+- **UI Library**: React 19
+- **Styling**: Tailwind CSS v4
+- **Components**: shadcn/ui with Radix UI primitives
+- **Data Fetching**: TanStack Query (React Query)
+- **Table Management**: TanStack Table with virtualization
+- **State Management**: Nuqs for URL state
+- **Icons**: Lucide React
+
+### Backend & Database
+
+- **Database**: Neon PostgreSQL
+- **ORM**: Drizzle ORM
+- **Runtime**: Bun (development)
+
+### Development Tools
+
+- **Language**: TypeScript
+- **Bundler**: Turbopack (Next.js)
+- **Package Manager**: Bun
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Bun](https://bun.sh/) (recommended) or Node.js 18+
+- Git
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/BioHazard786/Leetcode-Companywise-Questions.git
+   cd Leetcode-Companywise-Questions
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   bun install
+   # or with npm
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your database credentials
+   ```
+
+4. **Run the development server**
+
+   ```bash
+   bun dev
+   # or with npm
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+
+### Database Setup
+
+This project uses Neon PostgreSQL. To set up your database:
+
+1. Create a [Neon](https://neon.tech) account
+2. Create a new database project
+3. Add your connection string to `.env.local`:
+
+   ```env
+   DATABASE_URL="your-neon-connection-string"
+   ```
+
+## 📁 Project Structure
+
+```text
+src/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Home page
+│   └── search-params.ts   # Search params configuration
+├── components/            # React components
+│   ├── problems/          # Problem-related components
+│   │   ├── columns.tsx    # Table column definitions
+│   │   ├── data-table.tsx # Main data table component
+│   │   ├── filters.tsx    # Filter components
+│   │   └── more-info.tsx  # Problem details modal
+│   ├── providers/         # Context providers
+│   └── ui/               # shadcn/ui components
+├── hooks/                # Custom React hooks
+├── lib/                  # Utility functions and configuration
+│   ├── constants.ts      # App constants
+│   ├── db.ts            # Database configuration
+│   ├── schema.ts        # Database schema
+│   ├── types.ts         # TypeScript type definitions
+│   └── utils.ts         # Utility functions
+└── server/              # Server-side code
+    └── action.ts        # Server actions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 UI Components
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project uses [shadcn/ui](https://ui.shadcn.com/) for consistent, accessible, and beautiful UI components:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Data Display**: Tables, Cards, Badges
+- **Navigation**: Sidebar, Dropdown menus
+- **Forms**: Input fields, Select dropdowns, Multi-select
+- **Feedback**: Loading spinners, Tooltips, Dialogs
+- **Layout**: Sheets, Separators, Scroll areas
 
-## Learn More
+## 🔧 Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Development
+bun dev          # Start development server with Turbopack
+bun build        # Build for production
+bun start        # Start production server
+bun lint         # Run ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Database
+bun db:generate  # Generate database migrations
+bun db:migrate   # Run database migrations
+bun db:studio    # Open Drizzle Studio
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌟 Key Features Explained
 
-## Deploy on Vercel
+### Smart Filtering System
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Real-time Search**: Type to instantly filter problems by title
+- **Multi-select Filters**: Choose multiple companies, topics, or difficulty levels
+- **URL Persistence**: Filters are saved in the URL for easy sharing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Performance Optimizations
+
+- **Infinite Scrolling**: Load problems progressively for better performance
+- **Virtual Scrolling**: Efficiently render large lists with TanStack Virtual
+- **Server-side Rendering**: Fast initial page loads with Next.js SSR
+- **Optimistic Updates**: Instant UI feedback with TanStack Query
+
+### Responsive Design
+
+- **Mobile-first**: Designed to work perfectly on all screen sizes
+- **Touch-friendly**: Optimized for touch interactions on mobile devices
+- **Keyboard Navigation**: Full keyboard accessibility support
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Liquidslr](https://github.com/liquidslr/leetcode-company-wise-problems) for providing the problem data
+- [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
+- [TanStack](https://tanstack.com/) for excellent data management tools
+- [Next.js](https://nextjs.org/) team for the amazing framework
+
+## 📞 Support
+
+If you have any questions or need help, please open an issue on GitHub or reach out to the maintainers.
+
+---
+
+Made with ❤️ for the coding community

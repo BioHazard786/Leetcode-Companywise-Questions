@@ -1,0 +1,16 @@
+{
+  "name": "leetcode-sync",
+  "version": "1.0.0",
+  "description": "Database sync for LeetCode company problems",
+  "type": "module",
+  "main": "sync.js",
+  "scripts": {
+    "sync": "bun sync.js",
+    "setup": "bun schema.js"
+  },
+  "dependencies": {
+    "postgres": "^3.4.4",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.4.5"
+  }
+}
