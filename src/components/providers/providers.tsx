@@ -13,7 +13,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
           <NuqsAdapter>{children}</NuqsAdapter>
         </Suspense>
       </SidebarProvider>

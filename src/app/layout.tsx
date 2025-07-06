@@ -88,11 +88,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-    // yandex: "your-yandex-verification-code",
-    // yahoo: "your-yahoo-verification-code",
-  },
   category: "technology",
 };
 
@@ -101,48 +96,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "LeetCode Company-wise Questions",
-    description:
-      "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon, and more. Practice coding interviews with problems sorted by difficulty, topics, and company preferences.",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://localhost:3000",
-    applicationCategory: "EducationalApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    author: {
-      "@type": "Organization",
-      name: "LeetCode Company-wise Questions",
-    },
-    keywords:
-      "leetcode, coding interview, programming problems, algorithms, data structures, technical interview, coding practice",
-    inLanguage: "en-US",
-    isAccessibleForFree: true,
-  };
-
   return (
-    <html lang="en">
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover"
-        />
-        <meta name="theme-color" content="#000000" />
-        <meta name="color-scheme" content="dark light" />
-        <link
-          rel="canonical"
-          href={process.env.NEXT_PUBLIC_APP_URL || "https://localhost:3000"}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
+    <html lang="en" suppressHydrationWarning>
+      {process.env.NODE_ENV === "development" ||
+      process.env.NEXT_PUBLIC_REACT_SCAN === "true" ? (
+        <head>
+          <script
+            src="https://unpkg.com/react-scan/dist/auto.global.js"
+            async
+          />
+        </head>
+      ) : null}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
@@ -163,7 +127,6 @@ export default function RootLayout({
                     </p>
                   </div>
                 </div>
-
                 {children}
               </div>
             </main>
