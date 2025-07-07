@@ -38,7 +38,7 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent>
+      <SheetContent className="[&>button]:absolute [&>button]:-top-10 [&>button]:opacity-0 [&>button]:pointer-events-none">
         <SheetHeader>
           <SheetTitle className="text-left">{problem.problem_title}</SheetTitle>
           <SheetDescription className="text-left">
@@ -46,7 +46,7 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
           </SheetDescription>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-100px)]">
+        <ScrollArea className="h-[calc(100dvh-140px)]">
           <div className="mt-6 space-y-6 p-4 pt-0">
             {/* Basic Info */}
             <div className="space-y-4">
