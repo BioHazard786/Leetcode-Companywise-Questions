@@ -6,7 +6,7 @@ import { Problem } from "@/lib/types";
 import { getRandomColor } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
-import Leetcode from "../ui/leetcode-icon";
+import { SiLeetcode } from "react-icons/si";
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty.toLowerCase()) {
@@ -130,7 +130,7 @@ export const columns: ColumnDef<Problem>[] = [
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Leetcode className="size-5" />
+            <SiLeetcode className="size-5" />
           </Link>
         </Button>
       );

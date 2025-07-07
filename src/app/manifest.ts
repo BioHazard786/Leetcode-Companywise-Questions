@@ -8,26 +8,38 @@ export default function manifest(): MetadataRoute.Manifest {
       "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon, and more.",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#000000",
+    background_color: "#0a0a0a",
+    theme_color: "#0a0a0a",
     icons: [
       {
-        src: "/favicon.ico",
-        sizes: "any",
-        type: "image/x-icon",
-      },
-      {
-        src: "/icon-192.png",
+        src: "/favicon-light.png",
         sizes: "192x192",
         type: "image/png",
+        purpose: "maskable",
       },
       {
-        src: "/icon-512.png",
+        src: "/favicon-light.png",
         sizes: "512x512",
         type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/favicon-dark.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/favicon-dark.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
       },
     ],
+    prefer_related_applications: false,
     categories: ["education", "productivity", "developer"],
-    orientation: "portrait",
+    orientation: "any",
+    lang: "en",
+    scope: "/",
   };
 }

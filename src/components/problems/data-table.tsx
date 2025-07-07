@@ -10,8 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Table,
   TableBody,
@@ -28,10 +36,9 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Search } from "lucide-react";
+import { Filter, Search, Settings2 } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useRef, useState } from "react";
-import { Spinner } from "../ui/spinner";
 
 export function DataTable() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -40,6 +47,7 @@ export function DataTable() {
   const [searchQuery, setSearchQuery] = useQueryState("search", {
     defaultValue: "",
   });
+  const { toggleSidebar } = useSidebar();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -142,21 +150,57 @@ export function DataTable() {
 
   return (
     <div className="w-full pb-4" key={`table-${allData.length}`}>
-      <div className="flex items-center p-4 gap-2">
-        <Input
-          ref={inputRef}
-          placeholder="Filter problems..."
-          defaultValue={searchQuery}
-          className="max-w-sm"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSearch();
-            }
-          }}
-        />
-        <Button variant="outline" size="icon" onClick={handleSearch}>
-          <Search className="size-4.5" />
-        </Button>
+      <div className="flex items-center justify-between p-4 gap-2">
+        <div className="flex items-center gap-2">
+          <Input
+            ref={inputRef}
+            placeholder="Filter problems..."
+            defaultValue={searchQuery}
+            className="max-w-sm"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+          <Button variant="outline" size="icon" onClick={handleSearch}>
+            <Search className="size-4.5" />
+          </Button>
+          <Button
+            className="md:hidden"
+            variant="outline"
+            size="icon"
+            onClick={toggleSidebar}
+          >
+            <Filter className="size-4.5" />
+          </Button>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Settings2 className="size-4.5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="rounded-none border-l-0 w-full border">
         <Table className="w-full">

@@ -11,7 +11,7 @@ import { Problem } from "@/lib/types";
 import { getRandomColor } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import Leetcode from "../ui/leetcode-icon";
+import { SiLeetcode } from "react-icons/si";
 import { ScrollArea } from "../ui/scroll-area";
 
 interface MoreInfoProps {
@@ -38,7 +38,7 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent className="w-[400px] sm:max-w-[540px]">
+      <SheetContent>
         <SheetHeader>
           <SheetTitle className="text-left">{problem.problem_title}</SheetTitle>
           <SheetDescription className="text-left">
@@ -129,7 +129,7 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
                   >
-                    <Leetcode className="size-4" />
+                    <SiLeetcode className="size-4" />
                     Open in LeetCode
                   </Link>
                 </Button>

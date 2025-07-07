@@ -24,13 +24,12 @@
 ### Frontend
 
 - **Framework**: Next.js 15 with App Router
-- **UI Library**: React 19
 - **Styling**: Tailwind CSS v4
 - **Components**: shadcn/ui with Radix UI primitives
 - **Data Fetching**: TanStack Query (React Query)
 - **Table Management**: TanStack Table with virtualization
 - **State Management**: Nuqs for URL state
-- **Icons**: Lucide React
+- **Icons**: Lucide React, React Icons
 
 ### Backend & Database
 
@@ -145,77 +144,52 @@ bun dev          # Start development server with Turbopack
 bun build        # Build for production
 bun start        # Start production server
 bun lint         # Run ESLint
-
-# Cloudflare Pages Deployment
-bun pages:build  # Build for Cloudflare Pages
-bun preview      # Preview locally with Cloudflare Workers
-bun deploy       # Deploy to Cloudflare Pages
-
-# Database
-bun db:generate  # Generate database migrations
-bun db:migrate   # Run database migrations
-bun db:studio    # Open Drizzle Studio
 ```
 
 ## 🚀 Deployment
 
-### Cloudflare Pages
+### Vercel (Recommended)
 
-This project is optimized for deployment on Cloudflare Pages with the following steps:
+This project is optimized for deployment on Vercel with seamless integration:
 
-#### Setup Requirements
+#### Automatic Deployment
 
-1. **Cloudflare Account**: Sign up at [Cloudflare](https://dash.cloudflare.com/sign-up)
-2. **Wrangler CLI**: Already included as a dev dependency
+1. **Deploy to Vercel**:
+   - Visit [vercel.com](https://vercel.com)
+   - Sign in with your GitHub account
+   - Click "New Project" and import your repository
+   - Vercel will automatically detect Next.js and configure build settings
 
-#### Automatic Deployment (Recommended)
+2. **Environment Variables**:
+   - In your Vercel dashboard, go to Project Settings → Environment Variables
+   - Add the following variables:
 
-1. **Connect your repository to Cloudflare Pages**:
-   - Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
-   - Click "Create a project" → "Connect to Git"
-   - Select your repository
+     ```env
+     DATABASE_URL=your-neon-database-connection-string
+     NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+     ```
 
-2. **Configure build settings**:
+3. **Deploy**: Vercel will automatically build and deploy your site on every push to the main branch
 
-   ```text
-   Build command: npm run pages:build
-   Build output directory: .vercel/output/static
-   Root directory: (leave empty)
-   ```
+#### Manual Deployment with Vercel CLI
 
-3. **Set environment variables**:
-   - Add your `DATABASE_URL` and other environment variables in the Pages dashboard
-
-4. **Deploy**: Cloudflare will automatically build and deploy your site
-
-#### Manual Deployment
-
-1. **Build the project**:
+1. **Install Vercel CLI**:
 
    ```bash
-   bun pages:build
+   npm i -g vercel
    ```
 
-2. **Deploy using Wrangler**:
+2. **Deploy**:
 
    ```bash
-   bunx wrangler pages deploy .vercel/output/static --project-name=your-project-name
+   vercel
    ```
 
-#### Environment Variables
+3. **Production deployment**:
 
-Make sure to set these environment variables in your Cloudflare Pages dashboard:
-
-- `DATABASE_URL`: Your Neon PostgreSQL connection string
-- `NEXT_PUBLIC_APP_URL`: Your Cloudflare Pages domain (e.g., `https://your-app.pages.dev`)
-
-### Other Deployment Options
-
-While optimized for Cloudflare Pages, this project can also be deployed to:
-
-- **Vercel**: `vercel deploy` (requires Vercel CLI)
-- **Netlify**: Connect repository and set build command to `npm run build`
-- **Docker**: Use the included Dockerfile (if you add one)
+   ```bash
+   vercel --prod
+   ```
 
 ## 🌟 Key Features Explained
 

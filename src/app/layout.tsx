@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import Providers from "@/components/providers/providers";
+import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -38,9 +39,28 @@ export const metadata: Metadata = {
     "coding challenges",
     "interview preparation",
   ],
-  authors: [{ name: "LeetCode Company-wise Questions" }],
-  creator: "LeetCode Company-wise Questions",
-  publisher: "LeetCode Company-wise Questions",
+  authors: [
+    {
+      name: "Mohd Zaid",
+      url: "https://github.com/BioHazard786",
+    },
+  ],
+  creator: "Mohd Zaid",
+  publisher: "Mohd Zaid",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/favicon-light.png",
+        href: "/favicon-light.png",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/favicon-dark.png",
+        href: "/favicon-dark.png",
+      },
+    ],
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -51,31 +71,6 @@ export const metadata: Metadata = {
   ),
   alternates: {
     canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "/",
-    title: "LeetCode Company-wise Questions | Practice Problems by Company",
-    description:
-      "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon, and more. Practice coding interviews with problems sorted by difficulty, topics, and company preferences.",
-    siteName: "LeetCode Company-wise Questions",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "LeetCode Company-wise Questions - Practice coding interview problems",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "LeetCode Company-wise Questions | Practice Problems by Company",
-    description:
-      "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon, and more.",
-    images: ["/og-image.png"],
-    creator: "@leetcode_practice",
   },
   robots: {
     index: true,
@@ -98,17 +93,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {process.env.NODE_ENV === "development" ||
-      process.env.NEXT_PUBLIC_REACT_SCAN === "true" ? (
-        <head>
+      <head>
+        {process.env.NODE_ENV === "development" ||
+        process.env.NEXT_PUBLIC_REACT_SCAN === "true" ? (
           <script
             src="https://unpkg.com/react-scan/dist/auto.global.js"
             async
           />
-        </head>
-      ) : null}
+        ) : null}
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
           <div className="flex h-screen w-full">
@@ -132,6 +127,7 @@ export default function RootLayout({
             </main>
           </div>
         </Providers>
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );
