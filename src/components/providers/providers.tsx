@@ -20,7 +20,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
       >
         <SidebarProvider>
-          <Suspense>
+          <Suspense fallback={null}>
             <NuqsAdapter>{children}</NuqsAdapter>
           </Suspense>
         </SidebarProvider>
