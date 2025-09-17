@@ -224,7 +224,7 @@ const Filters = () => {
       </Accordion>
       <SidebarGroup>
         <SidebarGroupContent>
-          <Button onClick={handleClearFilters} className="w-full">
+          <Button onClick={handleClearFilters} className="w-full" disabled={!selectedCompanies.length && !selectedTopics.length && !selectedDifficulty.length}>
             Clear Filters
           </Button>
         </SidebarGroupContent>

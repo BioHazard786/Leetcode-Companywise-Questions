@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/table";
 import { useProblems } from "@/hooks/use-problems";
 import { Problem } from "@/lib/types";
+import { isValidLeetCodeUrl } from "@/lib/utils";
 import {
   VisibilityState,
   flexRender,
@@ -39,8 +40,10 @@ import {
 import { Filter, Search, Settings2 } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useRef, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function DataTable() {
+  const isMobile = useIsMobile();
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -61,7 +64,17 @@ export function DataTable() {
 
   const handleSearch = () => {
     if (inputRef.current) {
-      setSearchQuery(inputRef.current.value);
+      const value = inputRef.current.value.trim();
+      
+      // If the input looks like a URL, validate it
+      if (value.includes('leetcode.com/problems/') && !isValidLeetCodeUrl(value)) {
+        // Clear the input and show alert for invalid LeetCode URL
+        inputRef.current.value = '';
+        alert('Invalid LeetCode URL format. Please provide a valid LeetCode problem URL like: https://leetcode.com/problems/two-sum/');
+        return;
+      }
+      
+      setSearchQuery(value);
     }
   };
 
@@ -150,31 +163,34 @@ export function DataTable() {
 
   return (
     <div className="w-full pb-4" key={`table-${allData.length}`}>
-      <div className="flex items-center justify-between p-4 gap-2">
-        <div className="flex items-center gap-2">
-          <Input
-            ref={inputRef}
-            placeholder="Filter problems..."
-            defaultValue={searchQuery}
-            className="max-w-sm"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
-          <Button variant="outline" size="icon" onClick={handleSearch}>
-            <Search className="size-4.5" />
-          </Button>
-          <Button
-            className="md:hidden"
-            variant="outline"
-            size="icon"
-            onClick={toggleSidebar}
-          >
-            <Filter className="size-4.5" />
-          </Button>
-        </div>
+      <div className="flex items-center gap-2 w-full p-4">
+        <Input
+          ref={inputRef}
+          placeholder={
+            isMobile
+              ? "Search or paste URL..."
+              : "Search problems or paste LeetCode URL..."
+          }
+          defaultValue={searchQuery}
+          className="w-full placeholder:text-sm"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+        />
+        <Button variant="outline" size="icon" onClick={handleSearch}>
+          <Search className="size-4.5" />
+        </Button>
+        <Button
+          className="md:hidden"
+          variant="outline"
+          size="icon"
+          onClick={toggleSidebar}
+        >
+          <Filter className="size-4.5" />
+        </Button>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">

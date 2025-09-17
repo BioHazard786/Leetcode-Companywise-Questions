@@ -3,6 +3,7 @@
 import { getDB } from "@/lib/db";
 import { companies, problems } from "@/lib/schema";
 import { Company, TableFilters } from "@/lib/types";
+import { isValidLeetCodeUrl, normalizeLeetCodeUrl } from "@/lib/utils";
 import { and, arrayContains, asc, eq, ilike, or, sql } from "drizzle-orm";
 
 export const getCompanies = async () => {
@@ -56,12 +57,20 @@ export const getProblems = async (filters: TableFilters = {}) => {
 
     // Title search with ILIKE (keeping trigram for advanced search)
     if (filters.search) {
-      conditions.push(
-        or(
-          ilike(problems.title, `%${filters.search}%`),
-          sql`similarity(${problems.title}, ${filters.search}) > 0.3`
-        )
-      );
+      // Check if the search input is a valid LeetCode URL
+      if (isValidLeetCodeUrl(filters.search)) {
+        // If it's a valid URL, search by exact link match
+        const normalizedUrl = normalizeLeetCodeUrl(filters.search);
+        conditions.push(eq(problems.link, normalizedUrl));
+      } else {
+        // If it's not a URL, use the original text search logic
+        conditions.push(
+          or(
+            ilike(problems.title, `%${filters.search}%`),
+            sql`similarity(${problems.title}, ${filters.search}) > 0.3`
+          )
+        );
+      }
     }
 
     // Topics filtering using array contains (AND logic - problems must have ALL selected topics)

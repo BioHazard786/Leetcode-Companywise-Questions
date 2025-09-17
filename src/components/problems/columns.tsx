@@ -3,23 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Problem } from "@/lib/types";
-import { getRandomColor } from "@/lib/utils";
+import { getAcceptanceColor, getRandomColor, getDifficultyColor } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
 import Link from "next/link";
-import { SiLeetcode } from "react-icons/si";
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty.toLowerCase()) {
-    case "easy":
-      return "green";
-    case "medium":
-      return "yellow";
-    case "hard":
-      return "red";
-    default:
-      return "gray";
-  }
-};
 
 export const columns: ColumnDef<Problem>[] = [
   {
@@ -50,8 +38,20 @@ export const columns: ColumnDef<Problem>[] = [
     accessorKey: "acceptance_rate",
     header: "Acceptance",
     cell: ({ row }) => {
-      const rate = row.getValue("acceptance_rate") as string | null;
-      return rate ? `${parseFloat(rate).toFixed(2)}%` : "-";
+      let acceptanceRate = row.getValue("acceptance_rate") as string | null;
+      if (acceptanceRate) {
+        const rateNum = parseFloat(acceptanceRate);
+        acceptanceRate = rateNum % 1 === 0 ? `${rateNum}%` : `${rateNum.toFixed(2)}%`;
+      } else {
+        acceptanceRate = "-";
+      }
+      return <Badge
+          color={getAcceptanceColor(acceptanceRate)}
+          variant="surface"
+          className="rounded-sm"
+        >
+          {acceptanceRate}
+        </Badge>;
     },
   },
   {
@@ -64,7 +64,7 @@ export const columns: ColumnDef<Problem>[] = [
       const remainingCount = companies.length - displayCount;
 
       return (
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-2">
           {displayCompanies.map((company, index) => (
             <Badge
               key={index}
@@ -97,7 +97,7 @@ export const columns: ColumnDef<Problem>[] = [
       const remainingCount = topics.length - displayCount;
 
       return (
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-2">
           {displayTopics.map((topic, index) => (
             <Badge
               key={index}
@@ -130,7 +130,8 @@ export const columns: ColumnDef<Problem>[] = [
             target="_blank"
             rel="noopener noreferrer"
           >
-            <SiLeetcode className="size-5" />
+            <Image src="/leetcode-dark.png" alt="LeetCode" width={16} height={16} className="dark:block hidden"/>
+            <Image src="/leetcode-light.png" alt="LeetCode" width={16} height={16} className="dark:hidden"/>
           </Link>
         </Button>
       );

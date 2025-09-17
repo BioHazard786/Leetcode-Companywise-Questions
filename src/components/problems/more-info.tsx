@@ -8,10 +8,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Problem } from "@/lib/types";
-import { getRandomColor } from "@/lib/utils";
+import { getAcceptanceColor, getRandomColor, getDifficultyColor } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import { SiLeetcode } from "react-icons/si";
+import Image from "next/image";
 import { ScrollArea } from "../ui/scroll-area";
 
 interface MoreInfoProps {
@@ -20,21 +20,15 @@ interface MoreInfoProps {
   onClose: () => void;
 }
 
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty.toLowerCase()) {
-    case "easy":
-      return "green";
-    case "medium":
-      return "yellow";
-    case "hard":
-      return "red";
-    default:
-      return "gray";
-  }
-};
 
 const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
   if (!problem) return null;
+
+  const getAcceptanceRate = (rate: string | null) => {
+    if (!rate) return "Not available";
+    const rateNum = parseFloat(rate);
+    return rateNum % 1 === 0 ? `${rateNum}%` : `${rateNum.toFixed(2)}%`;
+  }
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -67,11 +61,13 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
                 <h3 className="text-sm font-medium text-muted-foreground mb-2">
                   Acceptance Rate
                 </h3>
-                <p className="text-sm">
-                  {problem.acceptance_rate
-                    ? `${parseFloat(problem.acceptance_rate).toFixed(2)}%`
-                    : "Not available"}
-                </p>
+                <Badge
+                  color={getAcceptanceColor(problem.acceptance_rate)}
+                  variant="surface"
+                  className="rounded-sm"
+                >
+                  {getAcceptanceRate(problem.acceptance_rate)}
+                </Badge>
               </div>
             </div>
 
@@ -129,7 +125,8 @@ const MoreInfo: React.FC<MoreInfoProps> = ({ problem, isOpen, onClose }) => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
                   >
-                    <SiLeetcode className="size-4" />
+                    <Image src="/leetcode-dark.png" alt="LeetCode" width={16} height={16} className="dark:block hidden"/>
+                    <Image src="/leetcode-light.png" alt="LeetCode" width={16} height={16} className="dark:hidden"/>
                     Open in LeetCode
                   </Link>
                 </Button>

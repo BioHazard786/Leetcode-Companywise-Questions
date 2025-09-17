@@ -41,6 +41,9 @@ export const problems = pgTable(
     // Basic indexes
     index("idx_problems_difficulty").on(table.difficulty),
 
+    // Index for link-based searches
+    index("idx_problems_link").on(table.link),
+
     // Full-text search index for title
     index("idx_problems_title_search").using(
       "gin",

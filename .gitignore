@@ -46,6 +46,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+test.ts
 
 # sync folder
 sync/.env

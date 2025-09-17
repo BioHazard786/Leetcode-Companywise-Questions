@@ -121,6 +121,8 @@ const VirtualizedCommand = ({
           width: "100%",
           overflow: "auto",
         }}
+        onMouseDown={() => setIsKeyboardNavActive(false)}
+        onMouseMove={() => setIsKeyboardNavActive(false)}
       >
         <CommandEmpty>No item found.</CommandEmpty>
         <CommandGroup>
@@ -134,6 +136,7 @@ const VirtualizedCommand = ({
             {virtualOptions.map((virtualOption) => (
               <CommandItem
                 key={filteredOptions[virtualOption.index].value}
+                disabled={isKeyboardNavActive}
                 className={cn(
                   "absolute left-0 top-0 w-full bg-transparent",
                   focusedIndex === virtualOption.index &&
@@ -200,7 +203,7 @@ export function MultiSelect({
   };
 
   return (
-    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal>
       <PopoverTrigger asChild>
         <Button
           ref={ref}
@@ -243,7 +246,9 @@ export function MultiSelect({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[--radix-popper-trigger-width]">
+      <PopoverContent
+        className="p-0 w-[16.45rem] md:w-[18.45rem]"
+      >
         <VirtualizedCommand
           height={height}
           options={options}
