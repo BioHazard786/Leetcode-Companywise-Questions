@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   let title = "LeetCode Company-wise Questions";
   let description =
-    "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon, and more.";
+    "Explore and filter LeetCode problems categorized by companies like Google, Microsoft, Amazon and more.";
 
   // Customize title and description based on filters
   const titleParts = [];
@@ -50,16 +50,37 @@ export async function generateMetadata({
     }. Practice coding interviews with curated problem sets.`;
   }
 
+  // Build URL with current search params for accurate social sharing
+  const urlSearchParams = new URLSearchParams();
+  if (search) urlSearchParams.set('search', search);
+  if (companies && companies.length > 0) {
+    companies.forEach(company => urlSearchParams.append('companies', company));
+  }
+  if (topics && topics.length > 0) {
+    topics.forEach(topic => urlSearchParams.append('topics', topic));
+  }
+  if (difficulty && difficulty.length > 0) {
+    difficulty.forEach(diff => urlSearchParams.append('difficulty', diff));
+  }
+  
+  const currentUrl = urlSearchParams.toString() ? `/?${urlSearchParams.toString()}` : '/';
+
   return {
     title,
     description,
     openGraph: {
       title,
       description,
+      url: currentUrl,
+      siteName: "LeetCode Company-wise Questions",
+      type: "website",
     },
     twitter: {
+      card: "summary_large_image",
       title,
       description,
+      site: "@leetcode_practice",
+      creator: "@BioHazard786",
     },
   };
 }
